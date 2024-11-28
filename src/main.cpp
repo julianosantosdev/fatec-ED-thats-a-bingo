@@ -25,10 +25,14 @@ int main()
 void menu()
 {
   cout << "|=========  MENU  =======|" << endl;
-  cout << "| 1 - OBTER CARTELA      |" << endl;
-  cout << "| 2 - ...                |" << endl;
-  cout << "| 3 - ...                |" << endl;
-  cout << "| 4 - ...                |" << endl;
-  cout << "| 0 - SAIR               |" << endl;
+  cout << "| 1 - INICIAR JOGO       |" << endl;
+  cout << "| 2 - OBTER CARTELA      |" << endl;
+  cout << "| 3 - VER CARTELAS       |" << endl;
+  cout << "| 4 - DELETAR CARTELA    |" << endl;
+  cout << "| 0 - ENCERRAR BINGO     |" << endl;
   cout << "|========================|" << endl;
+}
+
+void generateBingoCard() {
+
 }
