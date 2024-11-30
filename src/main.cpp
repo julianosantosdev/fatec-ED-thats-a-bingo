@@ -2,16 +2,40 @@
 using namespace std;
 
 void menu();
+BingoCardsStack *startStack();
+
+struct CardNumber
+  {
+    string number;
+    bool verify;
+  };
+
+  struct BingoCard
+  {
+    CardNumber cardItems[5][5];
+  };
+
+  struct NodeCard
+  {
+    BingoCard *card;
+    NodeCard *nextCard;
+  };
+
+  struct BingoCardsStack
+  {
+    NodeCard *top;
+    int size;
+  };
 
 int main()
 {
-  struct BingoCard
-  {
-    //char bingo[5] = {'B', 'I', 'N', 'G', 'O'};
-    //string freeSpace = "FREE";
-    
-  };
+  int *BingoCardQuantity;
   int option;
+
+  
+
+  // for (int i = 0)
+
   do
   {
     menu();
@@ -20,7 +44,7 @@ int main()
   } while (option == 0);
 
   return 0;
-}
+};
 
 void menu()
 {
@@ -31,8 +55,15 @@ void menu()
   cout << "| 4 - DELETAR CARTELA    |" << endl;
   cout << "| 0 - ENCERRAR BINGO     |" << endl;
   cout << "|========================|" << endl;
-}
+};
 
-void generateBingoCard() {
+BingoCardsStack *startStack()
+{
+  BingoCardsStack stack = new BingoCardsStack;
+  stack->size = 0;
+  return stack;
+};
 
+void generateBingoCard()
+{
 }
