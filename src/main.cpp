@@ -30,20 +30,24 @@ struct BingoCardsStack
 };
 
 int menu();
-// BingoCardsStack *initStack();
+BingoCardsStack *initStack();
 int generateNumbers(int column);
 void push(BingoCardsStack *stack, BingoCard *NewCard);
-BingoCard *generateBingoCard(int quantity);
+BingoCard *generateBingoCard();
+void readBingoCards(BingoCardsStack *stack);
+void destroyStack(BingoCardsStack *stack);
 
 int main()
 {
   srand(time(NULL));
   int *BingoCardQuantity;
   int option = 0;
+
+  BingoCardsStack *userStack = initStack();
+
   do
   {
-    int option = menu();
-    int choice = 2;
+    int choice = menu();
 
     switch (choice)
     {
@@ -52,11 +56,23 @@ int main()
       cout << "Com quantas cartelas deseja Bingar? : ";
       cin >> quantity;
 
-      generateBingoCard(quantity);
+      while (quantity != 0)
+      {
+        push(userStack, generateBingoCard());
+        quantity--;
+      }
+      break;
 
+    case 3:
+      readBingoCards(userStack);
+      break;
+
+    case 4:
+      destroyStack(userStack);
       break;
 
     default:
+      cout << "Nenhuma opção selecionada..." << endl;
       break;
     }
 
@@ -86,77 +102,99 @@ BingoCardsStack *initStack()
 {
   BingoCardsStack *stack = new BingoCardsStack;
   stack->size = 0;
-  stack->top = nullptr;
+  stack->top = NULL;
   return stack;
 };
 
-BingoCard *generateBingoCard(int quantity)
+BingoCard *generateBingoCard()
 {
   // TENTAR COLOCAR UMA ANIMACAO DE CARREGAMENTO USANDO FLUSH E SLEEP.
-  int generated = 0;
-
   // matrix[i][j] - melhorar gerar todas as colunas e depois as linhas, ja que as colunas tem o mesmo intervalo numerico
-  while (quantity > generated)
+  BingoCard *newBingoCard = new BingoCard;
+  for (int j = 0; j < 5; j++)
   {
-    BingoCard *newBingoCard = new BingoCard;
-    for (int j = 0; j < 5; j++)
+    for (int i = 0; i < 5; i++)
     {
-      for (int i = 0; i < 5; i++)
-      {
-        CardNumber *cardItem;
-        string randomNumber = to_string(generateNumbers(j));
-        cardItem->number = randomNumber;
-        newBingoCard->cardItems[i][j] = cardItem;
-      }
+      CardNumber *cardItem = new CardNumber;
+      string randomNumber = to_string(generateNumbers(j));
+      cardItem->number = randomNumber;
+      newBingoCard->cardItems[i][j] = cardItem;
     }
   }
-  generated++;
   return newBingoCard;
 };
 
 int generateNumbers(int column)
-/*
-  0 -> B
-  1 -> I
-  2 -> N
-  3 -> G
-  4 -> 0
-*/
 {
-  int randomNumber;
+  // 0 -> B, 1 -> I, 2 -> N, 3 -> G, 4 -> 0
+  int randomNumber = 0;
   switch (column)
   {
   case 0:
-    return randomNumber = rand() % 15 + 1;
+    randomNumber = rand() % 15 + 1;
     break;
 
   case 1:
-    return randomNumber = rand() % 30 + 16;
+    randomNumber = rand() % 15 + 16;
     break;
 
   case 2:
-    return randomNumber = rand() % 45 + 31;
+    randomNumber = rand() % 15 + 31;
     break;
 
   case 3:
-    return randomNumber = rand() % 46 + 60;
+    randomNumber = rand() % 15 + 46;
     break;
 
   case 4:
-    return randomNumber = rand() % 61 + 75;
-    break;
-
-  default:
+    randomNumber = rand() % 15 + 60;
     break;
   }
-}
+  return randomNumber;
+};
 
-void push(BingoCardsStack *stack, BingoCard *NewCard)
+void push(BingoCardsStack *stack, BingoCard *newCard)
 {
-  NodeCard *nodeCard = new NodeCard;
-  nodeCard->card = NewCard;
-  nodeCard->nextCard = stack->top;
+  NodeCard *newNodeCard = new NodeCard;
+  if (newNodeCard == NULL)
+  {
+    exit(1);
+  }
+
+  newNodeCard->card = newCard;
+  newNodeCard->nextCard = stack->top;
+  stack->top = newNodeCard;
   stack->size++;
+};
+
+void destroyStack(BingoCardsStack *stack)
+{
+  while (stack->top != NULL)
+  {
+  }
+};
+
+void readBingoCards(BingoCardsStack *stack)
+{
+  if (stack->top == NULL)
+  {
+    cout << "Ainda não há cartelas registradas..." << endl;
+  }
+
+  NodeCard *topCard = stack->top;
+  while (topCard != NULL)
+  {
+    for (int i = 0; i < 5; i++)
+    {
+      for (int j = 0; j < 5; j++)
+      {
+        cout << "| " << topCard->card->cardItems[i][j]->number << " ";
+      }
+      cout << endl;
+    }
+    topCard = topCard->nextCard;
+    cout << "\n";
+  }
 }
 
 // VERIFICAR NÚMEROS REPETIDOS DURANTE GERAÇÃO DE RANDÔMICO
