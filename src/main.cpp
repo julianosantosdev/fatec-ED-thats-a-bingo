@@ -36,6 +36,7 @@ void push(BingoCardsStack *stack, BingoCard *NewCard);
 BingoCard *generateBingoCard();
 void readBingoCards(BingoCardsStack *stack);
 void destroyStack(BingoCardsStack *stack);
+bool verifyRepeated(BingoCard *bingoCard, string generatedNumber, int cardLine, int cardColumn);
 
 int main()
 {
@@ -109,18 +110,28 @@ BingoCardsStack *initStack()
 BingoCard *generateBingoCard()
 {
   // TENTAR COLOCAR UMA ANIMACAO DE CARREGAMENTO USANDO FLUSH E SLEEP.
-  // matrix[i][j] - melhorar gerar todas as colunas e depois as linhas, ja que as colunas tem o mesmo intervalo numerico
+  // matrix[i][j] - melhor gerar todas as colunas e depois as linhas, ja que cada coluna tem o intervalo numerico diferente, deixando mais fácil a verificação de repetidos ao invés de percorrer toda a cartela.
   BingoCard *newBingoCard = new BingoCard;
   for (int j = 0; j < 5; j++)
   {
     for (int i = 0; i < 5; i++)
     {
       CardNumber *cardItem = new CardNumber;
-      string randomNumber = to_string(generateNumbers(j));
+      string randomNumber;
+
+      do
+      {
+        randomNumber = to_string(generateNumbers(j));
+      } while (verifyRepeated(newBingoCard, randomNumber, i, j));
+
       cardItem->number = randomNumber;
       newBingoCard->cardItems[i][j] = cardItem;
     }
   }
+
+  newBingoCard->cardItems[2][2]->number = "FREE";
+  newBingoCard->cardItems[2][2]->verify = true;
+
   return newBingoCard;
 };
 
@@ -188,13 +199,33 @@ void readBingoCards(BingoCardsStack *stack)
     {
       for (int j = 0; j < 5; j++)
       {
-        cout << "| " << topCard->card->cardItems[i][j]->number << " ";
+        cout << "|\t" << topCard->card->cardItems[i][j]->number << "\t";
       }
       cout << endl;
     }
     topCard = topCard->nextCard;
     cout << "\n";
   }
+}
+
+bool verifyRepeated(BingoCard *bingoCard, string generatedNumber, int cardLine, int cardColumn)
+{
+  bool repeated = false;
+
+  for (int i = 0; i < cardLine; i++)
+  {
+    if (generatedNumber == bingoCard->cardItems[i][cardColumn]->number)
+    {
+      repeated = true;
+      break;
+    }
+    else
+    {
+      repeated = false;
+    }
+  }
+
+  return repeated;
 }
 
 // VERIFICAR NÚMEROS REPETIDOS DURANTE GERAÇÃO DE RANDÔMICO
