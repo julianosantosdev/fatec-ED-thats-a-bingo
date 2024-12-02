@@ -20,7 +20,7 @@ struct BingoCard
 struct NodeCard
 {
   BingoCard *card;
-  NodeCard *nextCard;
+  NodeCard *nextNodeCard;
 };
 
 struct BingoCardsStack
@@ -34,9 +34,11 @@ BingoCardsStack *initStack();
 int generateNumbers(int column);
 void push(BingoCardsStack *stack, BingoCard *NewCard);
 BingoCard *generateBingoCard();
-void readBingoCards(BingoCardsStack *stack);
-void destroyStack(BingoCardsStack *stack);
 bool verifyRepeated(BingoCard *bingoCard, string generatedNumber, int cardLine, int cardColumn);
+void readBingoCards(BingoCardsStack *stack);
+void deleteBingoCard(BingoCard *bingoCard);
+void destroyStack(BingoCardsStack *stack);
+void pop(BingoCardsStack *stack);
 
 int main()
 {
@@ -173,16 +175,29 @@ void push(BingoCardsStack *stack, BingoCard *newCard)
   }
 
   newNodeCard->card = newCard;
-  newNodeCard->nextCard = stack->top;
+  newNodeCard->nextNodeCard = stack->top;
   stack->top = newNodeCard;
   stack->size++;
 };
+
+void pop(BingoCardsStack *stack)
+{
+  NodeCard *topBingoNodeCard = stack->top;
+  NodeCard *nextNodeBingoCard = stack->top->nextNodeCard;
+  stack->top = nextNodeBingoCard;
+
+  deleteBingoCard(topBingoNodeCard->card);
+  stack->size--;
+  delete topBingoNodeCard;
+}
 
 void destroyStack(BingoCardsStack *stack)
 {
   while (stack->top != NULL)
   {
+    pop(stack);
   }
+  delete stack;
 };
 
 void readBingoCards(BingoCardsStack *stack)
@@ -201,9 +216,9 @@ void readBingoCards(BingoCardsStack *stack)
       {
         cout << "|\t" << topCard->card->cardItems[i][j]->number << "\t";
       }
-      cout << endl;
+      cout << "|" << endl;
     }
-    topCard = topCard->nextCard;
+    topCard = topCard->nextNodeCard;
     cout << "\n";
   }
 }
@@ -226,6 +241,18 @@ bool verifyRepeated(BingoCard *bingoCard, string generatedNumber, int cardLine, 
   }
 
   return repeated;
+}
+
+void deleteBingoCard(BingoCard *bingoCard)
+{
+  for (int i = 0; i < 5; i++)
+  {
+    for (int j = 0; j < 5; j++)
+    {
+      delete bingoCard->cardItems[i][j];
+    }
+  }
+  delete bingoCard;
 }
 
 // VERIFICAR NÚMEROS REPETIDOS DURANTE GERAÇÃO DE RANDÔMICO
