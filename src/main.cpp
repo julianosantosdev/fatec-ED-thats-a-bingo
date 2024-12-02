@@ -44,7 +44,7 @@ int main()
 {
   srand(time(NULL));
   int *BingoCardQuantity;
-  int option = 0;
+  int option;
 
   BingoCardsStack *userStack = initStack();
 
@@ -55,6 +55,7 @@ int main()
     switch (choice)
     {
     case (2):
+      option = choice;
       int quantity;
       cout << "Com quantas cartelas deseja Bingar? : ";
       cin >> quantity;
@@ -67,19 +68,26 @@ int main()
       break;
 
     case 3:
+      option = choice;
       readBingoCards(userStack);
       break;
 
     case 4:
+      option = choice;
       destroyStack(userStack);
+      break;
+
+    case 0:
+      option = choice;
+      cout << "Encerrando o Bingo..." << endl;
+      cout << "Até mais!" << endl;
       break;
 
     default:
       cout << "Nenhuma opção selecionada..." << endl;
       break;
     }
-
-  } while (option == 0);
+  } while (option != 0);
 
   return 0;
 };
