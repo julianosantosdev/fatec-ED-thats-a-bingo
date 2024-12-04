@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string>
+#include <unistd.h>
 
 using namespace std;
 
@@ -29,6 +30,8 @@ struct BingoCardsStack
   int size;
 };
 
+int numberCollection[75] = {0};
+
 int menu();
 BingoCardsStack *initStack();
 int generateNumbers(int column);
@@ -39,6 +42,9 @@ void readBingoCards(BingoCardsStack *stack);
 void deleteBingoCard(BingoCard *bingoCard);
 void destroyStack(BingoCardsStack *stack);
 void pop(BingoCardsStack *stack);
+string callNumber();
+void bingoGame(BingoCardsStack *stack);
+void markBingoCards(BingoCardsStack *stack, string calledNumber);
 
 int main()
 {
@@ -54,6 +60,23 @@ int main()
 
     switch (choice)
     {
+    case 1:
+      // if (userStack->top == NULL)
+      // {
+      //   cout << "Você nao tem cartelas para jogar... Sinto muito 😔" << "\n";
+      //   break;
+      // }
+
+      cout << "Iniciando Jogo..." << "\n";
+      sleep(2);
+      cout << "Remexendo o saco...";
+      sleep(2);
+      cout << "Começou!!" << "\n";
+
+      bingoGame(userStack);
+
+      break;
+
     case (2):
       option = choice;
       int quantity;
@@ -205,7 +228,7 @@ void destroyStack(BingoCardsStack *stack)
   {
     pop(stack);
   }
-  delete stack;
+  // delete stack;
 };
 
 void readBingoCards(BingoCardsStack *stack)
@@ -263,4 +286,72 @@ void deleteBingoCard(BingoCard *bingoCard)
   delete bingoCard;
 }
 
-// VERIFICAR NÚMEROS REPETIDOS DURANTE GERAÇÃO DE RANDÔMICO
+string callNumber()
+{
+  int number = rand() % 75 + 1;
+
+  if (numberCollection[number - 1] != 0)
+  {
+    callNumber();
+  }
+  else
+  {
+    numberCollection[number - 1] = number;
+  }
+  return to_string(number);
+}
+
+void bingoGame(BingoCardsStack *stack)
+{
+  int stop = 0;
+
+  while (stop < 10)
+  {
+    string calledNumber = callNumber();
+    cout << "Numero chamado é... " << calledNumber << "\n";
+    markBingoCards(stack, calledNumber);
+    sleep(1);
+    stop++;
+  }
+}
+
+void markBingoCards(BingoCardsStack *stack, string calledNumber)
+{
+  NodeCard *topCard = stack->top;
+  int j;
+
+  if (calledNumber > "1" || calledNumber <= "15")
+  {
+    j = 0;
+  }
+  else if (calledNumber > "15" || calledNumber <= "30")
+  {
+    j = 1;
+  }
+  else if (calledNumber > "30" || calledNumber <= "45")
+  {
+    j = 2;
+  }
+  else if (calledNumber > "45" || calledNumber <= "60")
+  {
+    j = 3;
+  }
+  else
+  {
+    j = 4;
+  }
+
+  while (topCard != NULL)
+  {
+    for (int i = 0; i < 5; i++)
+    {
+      if (topCard->card->cardItems[i][j]->number == calledNumber)
+      {
+        topCard->card->cardItems[i][j]->verify = true;
+        cout << "numero marcado" << "\n";
+      }
+    }
+
+    topCard = topCard->nextNodeCard;
+  }
+}
