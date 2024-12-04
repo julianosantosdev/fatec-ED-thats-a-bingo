@@ -150,8 +150,6 @@ BingoCardsStack *initStack()
 
 BingoCard *generateBingoCard()
 {
-  // TENTAR COLOCAR UMA ANIMACAO DE CARREGAMENTO USANDO FLUSH E SLEEP.
-  // matrix[i][j] - melhor gerar todas as colunas e depois as linhas, ja que cada coluna tem o intervalo numerico diferente, deixando mais fácil a verificação de repetidos ao invés de percorrer toda a cartela.
   BingoCard *newBingoCard = new BingoCard;
 
   for (int j = 0; j < 5; j++)
@@ -179,7 +177,7 @@ BingoCard *generateBingoCard()
 
 int generateNumbers(int column)
 {
-  // 0 -> B, 1 -> I, 2 -> N, 3 -> G, 4 -> 0
+  // 0 -> B, 1 -> I, 2 -> N, 3 -> G, 4 -> O
   int randomNumber = 0;
   switch (column)
   {
