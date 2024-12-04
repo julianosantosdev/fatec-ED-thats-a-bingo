@@ -15,6 +15,7 @@ struct CardNumber
 
 struct BingoCard
 {
+  int cardID;
   CardNumber *cardItems[5][5];
 };
 
@@ -30,8 +31,6 @@ struct BingoCardsStack
   int size;
 };
 
-int numberCollection[75] = {0};
-
 int menu();
 BingoCardsStack *initStack();
 int generateNumbers(int column);
@@ -42,15 +41,22 @@ void readBingoCards(BingoCardsStack *stack);
 void deleteBingoCard(BingoCard *bingoCard);
 void destroyStack(BingoCardsStack *stack);
 void pop(BingoCardsStack *stack);
-string callNumber();
+int callNumber();
 void bingoGame(BingoCardsStack *stack);
-void markBingoCards(BingoCardsStack *stack, string calledNumber);
+void markBingoCards(BingoCardsStack *stack, int calledNumber);
+bool checkBingoCard(BingoCardsStack *stack);
+void resetCalledNumbers();
+
+int numberCollection[75] = {0};
+bool columnChecked = false;
+bool lineChecked = false;
 
 int main()
 {
   srand(time(NULL));
   int *BingoCardQuantity;
   int option;
+  int CardIDController = 0;
 
   BingoCardsStack *userStack = initStack();
 
@@ -61,11 +67,11 @@ int main()
     switch (choice)
     {
     case 1:
-      // if (userStack->top == NULL)
-      // {
-      //   cout << "Você nao tem cartelas para jogar... Sinto muito 😔" << "\n";
-      //   break;
-      // }
+      if (userStack->top == NULL)
+      {
+        cout << "Você nao tem cartelas para jogar... Sinto muito 😔" << "\n";
+        break;
+      }
 
       cout << "Iniciando Jogo..." << "\n";
       sleep(2);
@@ -74,7 +80,8 @@ int main()
       cout << "Começou!!" << "\n";
 
       bingoGame(userStack);
-
+      resetCalledNumbers();
+      destroyStack(userStack);
       break;
 
     case (2):
@@ -104,6 +111,7 @@ int main()
       option = choice;
       cout << "Encerrando o Bingo..." << endl;
       cout << "Até mais!" << endl;
+      delete userStack;
       break;
 
     default:
@@ -145,6 +153,7 @@ BingoCard *generateBingoCard()
   // TENTAR COLOCAR UMA ANIMACAO DE CARREGAMENTO USANDO FLUSH E SLEEP.
   // matrix[i][j] - melhor gerar todas as colunas e depois as linhas, ja que cada coluna tem o intervalo numerico diferente, deixando mais fácil a verificação de repetidos ao invés de percorrer toda a cartela.
   BingoCard *newBingoCard = new BingoCard;
+
   for (int j = 0; j < 5; j++)
   {
     for (int i = 0; i < 5; i++)
@@ -206,6 +215,7 @@ void push(BingoCardsStack *stack, BingoCard *newCard)
   }
 
   newNodeCard->card = newCard;
+  newNodeCard->card->cardID = stack->size;
   newNodeCard->nextNodeCard = stack->top;
   stack->top = newNodeCard;
   stack->size++;
@@ -228,7 +238,6 @@ void destroyStack(BingoCardsStack *stack)
   {
     pop(stack);
   }
-  // delete stack;
 };
 
 void readBingoCards(BingoCardsStack *stack)
@@ -286,72 +295,136 @@ void deleteBingoCard(BingoCard *bingoCard)
   delete bingoCard;
 }
 
-string callNumber()
+int callNumber()
 {
-  int number = rand() % 75 + 1;
+  int number = 0;
 
-  if (numberCollection[number - 1] != 0)
+  do
   {
-    callNumber();
-  }
-  else
-  {
-    numberCollection[number - 1] = number;
-  }
-  return to_string(number);
+    number = rand() % 75 + 1;
+
+  } while (numberCollection[number - 1] == number);
+
+  numberCollection[number - 1] = number;
+  return number;
 }
 
 void bingoGame(BingoCardsStack *stack)
 {
-  int stop = 0;
+  bool stop = false;
 
-  while (stop < 10)
+  while (stop == false)
   {
-    string calledNumber = callNumber();
+    int calledNumber = callNumber();
     cout << "Numero chamado é... " << calledNumber << "\n";
     markBingoCards(stack, calledNumber);
-    sleep(1);
-    stop++;
+    // sleep(1);
+    cout << "\n";
+    stop = checkBingoCard(stack);
   }
 }
 
-void markBingoCards(BingoCardsStack *stack, string calledNumber)
+void markBingoCards(BingoCardsStack *stack, int calledNumber)
 {
   NodeCard *topCard = stack->top;
   int j;
 
-  if (calledNumber > "1" || calledNumber <= "15")
+  if (calledNumber >= 1 && calledNumber <= 15)
   {
     j = 0;
   }
-  else if (calledNumber > "15" || calledNumber <= "30")
+  else if (calledNumber > 15 && calledNumber <= 30)
   {
     j = 1;
   }
-  else if (calledNumber > "30" || calledNumber <= "45")
+  else if (calledNumber > 30 && calledNumber <= 45)
   {
     j = 2;
   }
-  else if (calledNumber > "45" || calledNumber <= "60")
+  else if (calledNumber > 45 && calledNumber <= 60)
   {
     j = 3;
   }
-  else
+  else if (calledNumber > 60 && calledNumber <= 75)
   {
     j = 4;
   }
+
+  string converted = to_string(calledNumber);
 
   while (topCard != NULL)
   {
     for (int i = 0; i < 5; i++)
     {
-      if (topCard->card->cardItems[i][j]->number == calledNumber)
+      if (topCard->card->cardItems[i][j]->number == converted)
       {
         topCard->card->cardItems[i][j]->verify = true;
-        cout << "numero marcado" << "\n";
+        cout << "Numero " << calledNumber << " marcado na cartela " << topCard->card->cardID << ".\n";
+      }
+    }
+    topCard = topCard->nextNodeCard;
+  }
+}
+
+bool checkBingoCard(BingoCardsStack *stack)
+{
+  NodeCard *topCard = stack->top;
+  bool bingo = false;
+  int fullHouseMarked = 0, lineMarked, columnMarked;
+
+  while (topCard != NULL && bingo == false)
+  {
+
+    for (int i = 0; i < 5; i++)
+    {
+      lineMarked = 0;
+      columnMarked = 0;
+
+      for (int j = 0; j < 5; j++)
+      {
+        if (topCard->card->cardItems[i][j]->verify == true)
+        {
+          fullHouseMarked++;
+          lineMarked++;
+        }
+        if (topCard->card->cardItems[j][i]->verify == true)
+        {
+          columnMarked++;
+        }
+      }
+
+      if (lineMarked == 5 && lineChecked == false)
+      {
+        lineChecked = true;
+        cout << "LINHA na cartela " << topCard->card->cardID << ".\n";
+      }
+
+      if (columnMarked == 5 && !columnChecked)
+      {
+        columnChecked = true;
+        cout << "COLUNA na cartela " << topCard->card->cardID << ".\n";
       }
     }
 
+    if (fullHouseMarked == 24)
+    {
+      cout << "OLHA A BOAAA na cartela " << topCard->card->cardID << ".\n";
+    }
+    else if (fullHouseMarked == 25)
+    {
+      cout << "BINGOOOOOOO na cartela " << topCard->card->cardID << "!!!\n\n";
+      bingo = true;
+      sleep(3);
+    }
     topCard = topCard->nextNodeCard;
+  }
+  return bingo;
+}
+
+void resetCalledNumbers()
+{
+  for (int i = 0; i < 75; i++)
+  {
+    numberCollection[i] = 0;
   }
 }
