@@ -316,7 +316,7 @@ void bingoGame(BingoCardsStack *stack)
     int calledNumber = callNumber();
     cout << "Numero chamado é... " << calledNumber << "\n";
     markBingoCards(stack, calledNumber);
-    // sleep(1);
+    sleep(1);
     cout << "\n";
     stop = checkBingoCard(stack);
   }
