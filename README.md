@@ -35,7 +35,7 @@ Usando o menu interativo, você cria gera suas cartelas e, em seguida, escolhe a
 
 #### INTERFACE DE ANDAMENTO DO JOGO EM TEMPO REAL:
 
-<img width="332px" alt="image" src="https://github.com/user-attachments/assets/1c16402e-3070-4b19-bf6c-6081100a606d" style="border-radius:8px">
+<img width="502px" alt="image" src="https://github.com/user-attachments/assets/cc2e4991-814f-4d5b-b440-85784ea61aa0" style="border-radius:8px">
 
 <br>
 <br>
