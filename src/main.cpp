@@ -4,7 +4,6 @@
 #include <time.h>
 #include <string>
 #include <unistd.h>
-#include <iostream>
 #include <fstream>
 using namespace std;
 
@@ -32,11 +31,12 @@ struct BingoCardsStack
   int size;
 };
 
-int menu();
 BingoCardsStack *initStack();
+BingoCard *generateBingoCard();
+
+int menu();
 int generateNumbers(int column);
 void push(BingoCardsStack *stack, BingoCard *NewCard);
-BingoCard *generateBingoCard();
 bool verifyRepeated(BingoCard *bingoCard, string generatedNumber, int cardLine, int cardColumn);
 void readBingoCards(BingoCardsStack *stack);
 void deleteBingoCard(BingoCard *bingoCard);
@@ -57,7 +57,6 @@ bool lineChecked = false;
 int main()
 {
   srand(time(NULL));
-  int *BingoCardQuantity;
   int option;
   int CardIDController = 0;
 
@@ -70,6 +69,7 @@ int main()
     switch (choice)
     {
     case 1:
+      option = choice;
       if (userStack->top == NULL)
       {
         cout << "Você nao tem cartelas para jogar... Sinto muito 😔" << ".\n\n";
@@ -92,7 +92,7 @@ int main()
 
       bingoGame(userStack);
       resetCalledNumbers();
-      destroyBingoCards(userStack);
+      // destroyBingoCards(userStack); cartas sendo limpadas ao final da partida. Comentado porque assim posso exibir novamente as cartas mas com as marcacoes.
       lineChecked = false;
       columnChecked = false;
       break;
@@ -250,7 +250,7 @@ void destroyBingoCards(BingoCardsStack *stack)
 {
   if (stack->top == NULL)
   {
-    cout << "Você nao tem cartelas deletar..." << "\n";
+    cout << "Você nao tem cartelas para deletar..." << "\n";
   };
 
   while (stack->top != NULL)
@@ -274,7 +274,14 @@ void readBingoCards(BingoCardsStack *stack)
     {
       for (int j = 0; j < 5; j++)
       {
-        cout << "|\t" << topCard->card->cardItems[i][j]->number << "\t";
+        if (topCard->card->cardItems[i][j]->verify == true)
+        {
+          cout << "|\t" << "\033[1;31m" << topCard->card->cardItems[i][j]->number << "\033[1;0m" << "\t";
+        }
+        else
+        {
+          cout << "|\t" << topCard->card->cardItems[i][j]->number << "\t";
+        }
       }
       cout << "|" << endl;
     }
@@ -337,10 +344,10 @@ void bingoGame(BingoCardsStack *stack)
   {
     int calledNumber = callNumber();
 
-    cout << "\033[1;36m" << "Numero chamado é... " << calledNumber << "\033[1;0m\n";
+    cout << "\033[1;36m" << "Numero chamado é... " << calledNumber << ".\033[1;0m\n";
 
     markBingoCards(stack, calledNumber);
-    // sleep(3);
+    sleep(3);
     cout << "\n";
     stop = checkBingoCard(stack);
   }
@@ -419,7 +426,7 @@ bool checkBingoCard(BingoCardsStack *stack)
       if (lineMarked == 5 && lineChecked == false)
       {
         lineChecked = true;
-        cout << "\033[1;33m" << "LINHA na cartela " << topCard->card->cardID << ".\033[1;0m\n";
+        cout << "\033[1;33m" << "LINHA na cartela " << topCard->card->cardID << "!\033[1;0m\n";
         int stop;
 
         do
@@ -432,14 +439,14 @@ bool checkBingoCard(BingoCardsStack *stack)
       if (columnMarked == 5 && columnChecked == false)
       {
         columnChecked = true;
-        cout << "\033[1;33m" << "COLUNA na cartela " << topCard->card->cardID << "..\033[1;0m\n";
+        cout << "\033[1;33m" << "COLUNA na cartela " << topCard->card->cardID << "!\033[1;0m\n";
         waitForUser();
       }
     }
 
     if (fullHouseMarked == 24)
     {
-      cout << "OLHA A BOAAA na cartela " << topCard->card->cardID << ".\n\n";
+      cout << "OLHA A BOAAA na cartela " << topCard->card->cardID << "!!\n\n";
       sleep(1);
     }
     else if (fullHouseMarked == 25)
