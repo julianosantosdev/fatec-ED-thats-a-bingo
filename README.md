@@ -6,7 +6,7 @@
 ## INSTRUÇÕES E OBSERVAÇÕES:
 - As cartelas são deletadas automaticamente após o fim da partida (opção 1), de maneira que não é possível iniciar outro jogo com a cartela já marcada e utilizada na partida anterior.
 - A função de deletar cartelas limpar as cartelas geradas mas não utilizadas.
-- Quando geradas cartelas, automaticamente são salvas em arquivo .TXT, contendo o nome "bingoCard" + o ID da cartela (ex: bingocard10).
+- Quando geradas cartelas, automaticamente são salvas em arquivo .TXT, contendo o nome "bingocard" + o ID da cartela (ex: bingocard10).
 - A deleção não afeta os arquivos gerados.
 - Se novas cartelas forem geradas, os arquivos .txt serão atualizados automaticamente.
 - Para deletá-los, faça individualmente.
