@@ -368,10 +368,10 @@ bool checkBingoCard(BingoCardsStack *stack)
 {
   NodeCard *topCard = stack->top;
   bool bingo = false;
-  int fullHouseMarked = 0, lineMarked, columnMarked;
 
   while (topCard != NULL && bingo == false)
   {
+    int fullHouseMarked = 0, lineMarked, columnMarked;
 
     for (int i = 0; i < 5; i++)
     {
@@ -397,7 +397,7 @@ bool checkBingoCard(BingoCardsStack *stack)
         cout << "LINHA na cartela " << topCard->card->cardID << ".\n";
       }
 
-      if (columnMarked == 5 && !columnChecked)
+      if (columnMarked == 5 && lineChecked == false)
       {
         columnChecked = true;
         cout << "COLUNA na cartela " << topCard->card->cardID << ".\n";
