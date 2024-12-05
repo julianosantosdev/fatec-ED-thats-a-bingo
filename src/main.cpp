@@ -4,7 +4,8 @@
 #include <time.h>
 #include <string>
 #include <unistd.h>
-
+#include <iostream>
+#include <fstream>
 using namespace std;
 
 struct CardNumber
@@ -46,6 +47,7 @@ void bingoGame(BingoCardsStack *stack);
 void markBingoCards(BingoCardsStack *stack, int calledNumber);
 bool checkBingoCard(BingoCardsStack *stack);
 void resetCalledNumbers();
+void createBingoCardTXT(BingoCardsStack *stack);
 
 int numberCollection[75] = {0};
 bool columnChecked = false;
@@ -101,6 +103,7 @@ int main()
       while (quantity != 0)
       {
         push(userStack, generateBingoCard());
+        createBingoCardTXT(userStack);
         quantity--;
       }
       break;
@@ -262,6 +265,7 @@ void readBingoCards(BingoCardsStack *stack)
   NodeCard *topCard = stack->top;
   while (topCard != NULL)
   {
+    cout << "ID DA CARTELA: " << topCard->card->cardID << "\n";
     for (int i = 0; i < 5; i++)
     {
       for (int j = 0; j < 5; j++)
@@ -437,6 +441,27 @@ bool checkBingoCard(BingoCardsStack *stack)
   }
   cout << "\n";
   return bingo;
+}
+
+void createBingoCardTXT(BingoCardsStack *stack)
+{
+  int cardNumber = stack->top->card->cardID;
+  string filename = "bingoCard" + to_string(cardNumber) + ".txt";
+  ofstream bingoCardTXT;
+  bingoCardTXT.open(filename);
+
+  bingoCardTXT << "ID DA CARTELA: " << cardNumber << "\n\n";
+  for (int i = 0; i < 5; i++)
+  {
+    for (int j = 0; j < 5; j++)
+    {
+      bingoCardTXT << "|\t " << stack->top->card->cardItems[i][j]->number << "\t ";
+    }
+    bingoCardTXT << "|\n";
+  }
+  bingoCardTXT << "\n";
+
+  bingoCardTXT.close();
 }
 
 void resetCalledNumbers()
