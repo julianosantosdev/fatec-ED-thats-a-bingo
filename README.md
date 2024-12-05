@@ -26,8 +26,13 @@ As regras podem ser conferidas [AQUI](https://github.com/julianosantosdev/fatec-
 Essa aplicação em C++ simula um jogo de bingo, geração randômica de números (sem repetição) e uso intensivo de ponteiros e pilhas.
 Usando o menu interativo, você cria gera suas cartelas e, em seguida, escolhe a opção de iniciar o jogo, que vai sortear as "pedras" e automaticamente conferir suas cartelas, anunciando quando houver a formação da LINHA, COLUNA e, finalmente, quando houver a cartela completa e qual cartela foi a completa (fullhouse);
 
-#### MENU:
+#### COMO EXECUTAR:
+- Clone o repositório;
+- Abra um terminal dentro da pasta src;
+- Execute o comando `g++ -o <nomeDaAplicacao> main.cpp`;
+- Em seguida execute com: `./<nomeDaAplicacao>`;
 
+#### MENU:
 <img width="332px" alt="image" src="https://github.com/user-attachments/assets/3ff5c395-5252-46aa-83c7-749750d44257" style="border-radius:8px">
 
 <br>
