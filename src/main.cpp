@@ -432,10 +432,12 @@ bool checkBingoCard(BingoCardsStack *stack)
     }
     else if (fullHouseMarked == 25)
     {
-      cout << "\033[1;31m" << "BINGOOOOOOO na cartela " << topCard->card->cardID << "!!! \033[1;0m\n";
-      bingo = true;
-      break;
+      cout << "TEMOS UM GANHADOR..." << "\n";
       sleep(5);
+      cout << "🎉🎉🎉🥳🥳🥳🏆🏆🏆 \033[5;37;104m" << "  BINGOOOOOOO na cartela " << topCard->card->cardID << "!!!  \033[1;0m 🏆🏆🏆🥳🥳🥳🎉🎉🎉\n";
+      bingo = true;
+      sleep(10);
+      break;
     }
     topCard = topCard->nextNodeCard;
   }
