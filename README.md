@@ -1,86 +1,52 @@
-# Projeto "Olha a Boa" - Cartela de Bingo
-
-O bingo é um jogo que envolve a marcação de números em uma cartela, conforme eles são sorteados aleatoriamente por um chamador.  
-O objetivo é preencher uma linha, coluna, ou um padrão específico de números antes dos outros jogadores e anunciar "Bingo!" para sinalizar a vitória.
-
-Com o advento da tecnologia, o bingo também ganhou versões digitais, onde jogadores podem participar remotamente, com números sendo chamados automaticamente e cartelas virtuais sendo preenchidas automaticamente.
-
-Neste projeto, você irá desenvolver um gerenciador de cartelas.
-
-O jogador poderá gerenciar uma ou mais cartelas.
+# THAT'S A BINGO!!!
+<img src="https://i.imgflip.com/1rjzbt.jpg" width="332px">
 
 ---
 
-## Requisitos do Projeto
+## INSTRUÇÕES E OBSERVAÇÕES:
+- As cartelas são deletadas automaticamente após o fim da partida (opção 1), de maneira que não é possível iniciar outro jogo com a cartela já marcada e utilizada na partida anterior.
+- A função de deletar cartelas limpar as cartelas geradas mas não utilizadas.
+- Quando geradas cartelas, automaticamente são salvas em arquivo .TXT, contendo o nome "bingoCard" + o ID da cartela (ex: bingocard10).
+- A deleção não afeta os arquivos gerados.
+- Se novas cartelas forem geradas, os arquivos .txt serão atualizados automaticamente.
+- Para deletá-los, faça individualmente.
+  
+---
 
-### 1. Menu Interativo
+### REQUISITOS DA APLICAÇÃO:
+As regras podem ser conferidas [AQUI](https://github.com/julianosantosdev/fatec-ED-thats-a-bingo/blob/main/Projeto.pdf)
 
-- Criar um menu interativo na função `main` que permita ao usuário interagir com o programa.
-- Opções no menu:
-  - Cadastrar uma ou mais cartelas.
-  - Marcar um número na cartela.
-  - Visualizar cartelas.
-  - Outras interações pertinentes.
+#### A APLICAÇÃO:
+Essa aplicação em C++ simula um jogo de bingo, geração randômica de números (sem repetição) e uso intensivo de ponteiros e pilhas.
+<br>
+<br>
+Usando o menu interativo, você cria gera suas cartelas e, em seguida, escolhe a opção de iniciar o jogo, que vai sortear as "pedras" e automaticamente conferir suas cartelas, anunciando quando  houver a formação da LINHA, COLUNA e, finalmente, quando houver a cartela completa e qual cartela foi a completa (fullhouse);
 
-### 2. Estrutura de Dados
+#### MENU:
+<img width="332px" alt="image" src="https://github.com/user-attachments/assets/3ff5c395-5252-46aa-83c7-749750d44257" style="border-radius:8px">
 
-- Criar estruturas de dados adequadas para armazenar uma lista de cartelas.
-- O jogador deve informar quantas cartelas ele quer, e o programa deve gerar as cartelas.
+<br>
+<br>
 
-### 3. Estrutura das Cartelas
+#### INTERFACE DE ANDAMENTO DO JOGO EM TEMPO REAL:
+<img width="332px" alt="image" src="https://github.com/user-attachments/assets/1c16402e-3070-4b19-bf6c-6081100a606d">
 
-Cada cartela é organizada em uma grade de 5x5 com 25 quadrados.  
-O quadrado central (geralmente chamado de "FREE") é livre e automaticamente preenchido.  
-Cada coluna é rotulada com uma das letras da palavra "BINGO" e possui um intervalo específico de números:
+<br>
+<br>
 
-Os números em cada coluna são selecionados aleatoriamente dentro de seus intervalos, garantindo que não haja repetições.
-
-| Coluna | Intervalo de Números |
-| ------ | -------------------- |
-| **B**  | 1 a 15               |
-| **I**  | 16 a 30              |
-| **N**  | 31 a 45 (com "FREE") |
-| **G**  | 46 a 60              |
-| **O**  | 61 a 75              |
-
-#### Exemplo:
-
-| **B** | **I** | **N** | **G** | **O** |
-| ----- | ----- | ----- | ----- | ----- |
-| 12    | 20    | 44    | 54    | 69    |
-| 15    | 19    | 34    | 51    | 74    |
-| 4     | 25    | FREE  | 50    | 68    |
-| 11    | 16    | 40    | 48    | 66    |
-| 6     | 29    | 36    | 58    | 72    |
-
-### 4. Visualização de Cartelas
-
-- Permitir ao jogador visualizar as cartelas que está utilizando no jogo.
-
-### 5. Marcação de Números
-
-- O jogador poderá inserir o número chamado.
-- O programa deve marcar o número na cartela.
-
-#### 5.1. Regras de Alerta
-
-- **COLUNA**: Caso todos os 5 quadrados de uma coluna estejam marcados, o programa deve exibir a mensagem `COLUNA`.
-- **LINHA**: Caso todos os 5 quadrados de uma linha estejam marcados, o programa deve exibir a mensagem `LINHA`.
-- **BINGO**: Caso todos os quadrados da cartela estejam marcados, o programa deve exibir a mensagem `BINGO`.
-- **Olha a Boa**: Caso os quadrados da cartela estejam preenchidos e falte apenas um número, o programa deve exibir a mensagem `Olha a Boa!`.
-
-### 6. Histórico de Números Chamados
-
-- O programa deve informar os números que já foram chamados.
-- Exemplo:
-  - Números chamados: `1, 2, 4, 6, 14, 15, 19, 25, 34, 40, 41, 52, 54, 67, 69`.
-  - Cartela 1: `4, 6, 19, 25, 34, 40, 54, 69`.
-
-### 7. Armazenamento das Cartelas
-
-- O programa deve gravar cada cartela gerada em um arquivo de texto separado.
-- Exemplo:
-  - Se o jogador pedir uma cartela, o programa deve gerar um arquivo para a cartela.
-  - Se o jogador pedir duas cartelas, o programa deve gerar dois arquivos, um para cada cartela.
+#### LISTAGEM DAS CARTELAS GERADAS E PRONTAS PARA JOGOR:
+<img width="502px" alt="image" src="https://github.com/user-attachments/assets/ab79f1b5-1244-4dbd-9b3f-99f9ca1af54f">
 
 ---
+
+#### MEMÓRIA HEAP:
+A aplicação conta com gerenciamento otimizado de memória heap. Não há vazamentos após o encerramento da aplicação.
+VALGRIND REPORT:
+
+<img width="800px" alt="image" src="https://github.com/user-attachments/assets/0adc56ab-1189-455e-8478-9489d258e578">
+
+#### FERRAMENTAS UTILIZADAS:
+- WSL2 Debian 12 Bookworm
+- VSCode 1.95.3
+- Windows Terminal 1.21.3231.0
+- Valgrind 3.19.0
