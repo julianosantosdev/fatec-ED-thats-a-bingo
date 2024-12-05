@@ -48,6 +48,7 @@ void markBingoCards(BingoCardsStack *stack, int calledNumber);
 bool checkBingoCard(BingoCardsStack *stack);
 void resetCalledNumbers();
 void createBingoCardTXT(BingoCardsStack *stack);
+void waitForUser();
 
 int numberCollection[75] = {0};
 bool columnChecked = false;
@@ -71,20 +72,23 @@ int main()
     case 1:
       if (userStack->top == NULL)
       {
-        cout << "Você nao tem cartelas para jogar... Sinto muito 😔" << ".\n";
+        cout << "Você nao tem cartelas para jogar... Sinto muito 😔" << ".\n\n";
         break;
       }
 
-      cout << "Iniciando Jogo..." << "\n";
+      cout << "Iniciando Jogo..." << "\n\n";
       sleep(2);
 
-      cout << "Mexendo o saco..." << "\n";
+      cout << "Embaralhando números..." << "\n\n";
       sleep(2);
 
-      cout << "Mexendo o saco..." << "\n";
+      cout << "Ativando sistema antifraude..." << "\n\n";
       sleep(2);
 
-      cout << "Começou!!" << "\n\n";
+      cout << "Chamando o Tigrinho 🐯..." << "\n\n";
+      sleep(2);
+
+      cout << "E... Começou!!!" << "\n\n";
 
       bingoGame(userStack);
       resetCalledNumbers();
@@ -336,7 +340,7 @@ void bingoGame(BingoCardsStack *stack)
     cout << "\033[1;36m" << "Numero chamado é... " << calledNumber << "\033[1;0m\n";
 
     markBingoCards(stack, calledNumber);
-    // sleep(1);
+    // sleep(3);
     cout << "\n";
     stop = checkBingoCard(stack);
   }
@@ -415,13 +419,21 @@ bool checkBingoCard(BingoCardsStack *stack)
       if (lineMarked == 5 && lineChecked == false)
       {
         lineChecked = true;
-        cout << "\033[1;33m" << "LINHA na cartela " << topCard->card->cardID << ".\033[1;0m\n ";
+        cout << "\033[1;33m" << "LINHA na cartela " << topCard->card->cardID << ".\033[1;0m\n";
+        int stop;
+
+        do
+        {
+          cout << "Digite 1 para continuar...";
+          cin >> stop;
+        } while (stop != 1);
       }
 
       if (columnMarked == 5 && columnChecked == false)
       {
         columnChecked = true;
         cout << "\033[1;33m" << "COLUNA na cartela " << topCard->card->cardID << "..\033[1;0m\n";
+        waitForUser();
       }
     }
 
@@ -432,16 +444,15 @@ bool checkBingoCard(BingoCardsStack *stack)
     }
     else if (fullHouseMarked == 25)
     {
-      cout << "TEMOS UM GANHADOR..." << "\n";
+      cout << "TEMOS UM GANHADOR...🤑🫣" << "\n";
       sleep(5);
-      cout << "🎉🎉🎉🥳🥳🥳🏆🏆🏆 \033[5;37;104m" << "  BINGOOOOOOO na cartela " << topCard->card->cardID << "!!!  \033[1;0m 🏆🏆🏆🥳🥳🥳🎉🎉🎉\n";
+      cout << "🎉🎉🎉🥳🥳🥳🏆🏆🏆 \033[5;37;104m" << "  BINGOOOOOOO na cartela " << topCard->card->cardID << "!!!  \033[1;0m 🏆🏆🏆🥳🥳🥳🎉🎉🎉\n\n\n";
       bingo = true;
-      sleep(10);
+      waitForUser();
       break;
     }
     topCard = topCard->nextNodeCard;
   }
-  cout << "\n";
   return bingo;
 }
 
@@ -472,4 +483,16 @@ void resetCalledNumbers()
   {
     numberCollection[i] = 0;
   }
+}
+
+void waitForUser()
+{
+  int stop;
+
+  do
+  {
+    cout << "Digite 1 para continuar: ";
+    cin >> stop;
+    cout << "\n";
+  } while (stop != 1);
 }
