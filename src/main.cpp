@@ -92,7 +92,10 @@ int main()
 
       bingoGame(userStack);
       resetCalledNumbers();
-      // destroyBingoCards(userStack); cartas sendo limpadas ao final da partida. Comentado porque assim posso exibir novamente as cartas mas com as marcacoes.
+
+      // destroyBingoCards(userStack); 
+      // Destruir as cartas ao final da partida. Comentado porque assim posso exibir novamente as cartas mas com as marcacoes.
+
       lineChecked = false;
       columnChecked = false;
       break;
@@ -427,13 +430,7 @@ bool checkBingoCard(BingoCardsStack *stack)
       {
         lineChecked = true;
         cout << "\033[1;33m" << "LINHA na cartela " << topCard->card->cardID << "!\033[1;0m\n";
-        int stop;
-
-        do
-        {
-          cout << "Digite 1 para continuar...";
-          cin >> stop;
-        } while (stop != 1);
+        waitForUser();
       }
 
       if (columnMarked == 5 && columnChecked == false)
