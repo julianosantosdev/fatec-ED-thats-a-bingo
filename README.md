@@ -4,7 +4,7 @@
 
 ---
 
-## INSTRUÇÕES E OBSERVAÇÕES:
+## OBSERVAÇÕES:
 
 - **IMPORTANTE:** A aplicação foi desenvoldida para rodar, primariamente, em ambiente Linux. Muito embora o código seja executado corretamente, a compilação em ambiente Windows pode trazer prejuízos na codificação de caracteres, emojis ou alguma funcionalidade.
 - **CRITÉRIO DE DESEMPATE:** Em caso de duas cartelas que tenham o mesmo número restante para que sejam completadas e ganharem a partida, a cartela de MAIOR ID tem preferência na correção e será, portanto, a única vencedora da partida.
@@ -21,10 +21,15 @@
 
 As regras podem ser conferidas [AQUI](https://github.com/julianosantosdev/fatec-ED-thats-a-bingo/blob/main/Projeto.pdf)
 
-#### A APLICAÇÃO:
+#### FUNCIONAMENTO e INSTRUÇÕES:
 
-Essa aplicação em C++ simula um jogo de bingo, geração randômica de números (sem repetição) e uso intensivo de ponteiros e pilhas.
-Usando o menu interativo, você cria gera suas cartelas e, em seguida, escolhe a opção de iniciar o jogo, que vai sortear as "pedras" e automaticamente conferir suas cartelas, anunciando quando houver a formação da LINHA, COLUNA e, finalmente, quando houver a cartela completa e qual cartela foi a completa (fullhouse);
+- Essa aplicação em C++ simula um jogo de bingo, geração randômica de números (sem repetição) e uso intensivo de ponteiros e pilhas.
+- Usando o menu interativo, você gera suas cartelas e, em seguida, escolhe a opção de iniciar o jogo, que vai sortear as "pedras" e automaticamente conferir suas cartelas, informando se o número foi marcado e em qual cartela.
+- A formação de LINHA e/ou COLUNA só acontece uma vez por jogo e é anunciada na tela, informando qual cartela conquistou a linha ou coluna.
+- Uma vez marcadas as LINHAS e COLUNAS, ainda que na mesma cartela, resta ao jogador que não teve linha ou coluna a chance de vencer fazendo a cartela cheia (fullhouse).
+- Quando houver cartela completa a aplicação anuncia a cartela do vencedor e encerra o jogo.
+- Após o encerramento, suas cartelas podem ainda ser visualizadas e também verificados quais números faltaram para completá-la.
+- Finalmente, ao terminar uma partida, delete as cartelas usadas (opção 4) e gere quantas novas cartelas desejar (opção 2).
 
 #### COMO EXECUTAR:
 - Clone o repositório;
