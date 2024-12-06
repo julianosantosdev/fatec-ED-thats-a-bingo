@@ -7,7 +7,7 @@
 
 >No. We just say *bingo*.
 
->***BINGO! How Fun!***
+>***BINGO!*** How Fun!
 
 ## OBSERVAÇÕES:
 
