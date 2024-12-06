@@ -13,7 +13,6 @@
 - Se novas cartelas forem geradas, os arquivos .txt serão atualizados automaticamente.
 - Para deletá-los, faça individualmente.
 
-
 ## REQUISITOS DA APLICAÇÃO:
 
 As regras podem ser conferidas [AQUI](https://github.com/julianosantosdev/fatec-ED-thats-a-bingo/blob/main/Projeto.pdf)
@@ -29,28 +28,39 @@ As regras podem ser conferidas [AQUI](https://github.com/julianosantosdev/fatec-
 - Finalmente, ao terminar uma partida, delete as cartelas usadas (opção 4) e gere quantas novas cartelas desejar (opção 2).
 
 ### COMO EXECUTAR:
+
 - Clone o repositório;
 - Abra um terminal dentro da pasta src;
 - Execute o comando `g++ -o <nomeDaAplicacao> main.cpp`;
 - Em seguida execute com: `./<nomeDaAplicacao>`;
 
 ### MENU:
+
 <img width="502px" alt="image" src="https://github.com/user-attachments/assets/1f259190-04ee-4cc3-b7f4-978f2238d187">
 
 <br>
 <br>
 
 ### LISTAGEM DAS CARTELAS GERADAS E PRONTAS PARA JOGAR:
+
 <img width="502px" alt="image" src="https://github.com/user-attachments/assets/76278e8f-fa5f-401b-bca0-fad3ed7536c3">
 
 <br>
 <br>
 
-### LISTAGEM DAS CARTELAS PÓS-JOGO (em vermelho, os números pontuados ; em branco, os faltantes)
+### LISTAGEM DAS CARTELAS PÓS-JOGO (em vermelho, os números pontuados ; em branco, os faltantes):
+
 <img width="502px" alt="image" src="https://github.com/user-attachments/assets/a10757fe-ce71-4e60-96df-f71f7e89e275">
 
+<br>
+<br>
+
 ### INTERFACE DE ANDAMENTO DO JOGO EM TEMPO REAL:
+
 <img width="502px" alt="image" src="https://github.com/user-attachments/assets/781755a8-6cc6-4691-8669-596abf24b7b7">
+
+<br>
+<br>
 
 ## DETALHES TÉCNICOS:
 
@@ -59,8 +69,8 @@ As regras podem ser conferidas [AQUI](https://github.com/julianosantosdev/fatec-
 A aplicação conta com gerenciamento otimizado de memória heap. Não há vazamentos após o encerramento da aplicação.
 
 #### VALGRIND REPORT:
-<img width="800px" alt="image" src="https://github.com/user-attachments/assets/876d285e-6726-4d38-8601-226e289437a4">
 
+<img width="800px" alt="image" src="https://github.com/user-attachments/assets/876d285e-6726-4d38-8601-226e289437a4">
 
 #### FERRAMENTAS UTILIZADAS:
 
