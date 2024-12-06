@@ -1,6 +1,13 @@
-# THAT'S A BINGO!!!
+# THAT'S A BINGO!!
 
 <img src="https://i.imgflip.com/1rjzbt.jpg" width="332px">
+
+>
+>Is that the way you say it? *That's a bingo*?
+
+>No. We just say *bingo*.
+
+>***BINGO! How Fun!***
 
 ## OBSERVAÇÕES:
 
